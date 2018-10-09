@@ -10,6 +10,9 @@ public abstract class Record {
     }
 
     public abstract boolean hasSubstring(String str);
+    //abstraktnij metod dlja voprosov
+
+    public abstract void askQuestions();
 
     public int getId() {
         return id;

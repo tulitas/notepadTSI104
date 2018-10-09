@@ -1,11 +1,24 @@
 package notepad;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    //12 konstanta dati, metod po date nize
+    public final static String DATE_FORMAT = "dd.MM.yyyy";
+    public final static DateTimeFormatter DATE_FORMATTER
+            = DateTimeFormatter.ofPattern(DATE_FORMAT);
+
+    public final static String TIME_FORMAT = "mm.HH";
+    public final static DateTimeFormatter TIME_FORMATTER
+            = DateTimeFormatter.ofPattern(TIME_FORMAT);
+
+
     private static Scanner scanner = new Scanner(System.in);
     private static List<Record> recordList = new ArrayList<>();
 
@@ -49,18 +62,9 @@ public class Main {
     private static void createReminder() {
         System.out.println("Enter reminder text");
         String text = askString();
-        System.out.println("Enter reminder date");
-        String date = askString();
-        System.out.println("Enter reminder time");
-        String time = askString();
 
         var reminder = new Reminder();
-        reminder.setText(text);
-        reminder.setDate(date);
-        reminder.setTime(time);
-
-        System.out.println(reminder);
-        recordList.add(reminder);
+        addRecord(reminder);
     }
 
     private static void find() {
@@ -74,12 +78,15 @@ public class Main {
     }
 
     private static void createNote() {
-        System.out.println("Enter text:");
-        String txt = askString();
+
         Note note = new Note();
-        note.setText(txt);
-        recordList.add(note);
-        System.out.println(note);
+        addRecord(note);
+    }
+
+    private static void addRecord(Record r) {
+        r.askQuestions();
+        recordList.add(r);
+        System.out.println(r);
     }
 
     private static void showHelp() {
@@ -129,31 +136,14 @@ public class Main {
         }
     }
 
-    private static void createPerson() {
-        System.out.println("Enter name:");
-        String name = askString();
+    public static void createPerson() {
 
-        System.out.println("Enter surname:");
-        String surname = askString();
 
-        System.out.println("Enter phone:");
-        String phone = askPhone();
-
-        System.out.println("Enter email:");
-        String email = askString();
-
-        Person p = new Person();
-        p.setName(name);
-        p.setSurname(surname);
-        p.setPhone(phone);
-        p.setEmail(email);
-
-        recordList.add(p);
-
-        System.out.println(p);
+        Person person = new Person();
+        addRecord(person);
     }
 
-    private static String askString() {
+    public static String askString() {
         var result = new ArrayList<String>();
         var word = scanner.next();
         if (word.startsWith("\"")) {
@@ -204,5 +194,15 @@ public class Main {
             // validation passed
             return phone;
         }
+    }
+    public static LocalDate askDate(){
+        String d = askString();
+        LocalDate date = LocalDate.parse(d, DATE_FORMATTER);
+        return date;
+    }
+    public static LocalTime askTime() {
+        String t = askString();
+        LocalTime time = LocalTime.parse(t, TIME_FORMATTER);
+        return time;
     }
 }

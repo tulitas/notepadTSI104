@@ -1,22 +1,45 @@
 package notepad;
 
-public class Reminder extends Note {
-    private String date;
-    private String time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-    public String getDate() {
+
+
+
+public class Reminder extends Note {
+    private LocalDate date;
+    private LocalTime time;
+//dalee nasledovanie
+    @Override
+    public void askQuestions() {
+        super.askQuestions();
+        System.out.println("Enter reminder date");
+         date = Main.askDate();
+        System.out.println("Enter reminder time");
+         time = Main.askTime();
+    }
+//16 - 20 nasledovanie
+    @Override
+    public boolean hasSubstring(String str) {
+        return super.hasSubstring(str)
+                || date.format(Main.DATE_FORMATTER).contains(str)
+                || time.format(Main.TIME_FORMATTER).contains(str);
+
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 

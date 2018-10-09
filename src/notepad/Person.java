@@ -5,6 +5,15 @@ public class Person extends Record {
     private String surname;
     private String phone;
     private String email;
+    private String hairColor;
+
+    public String getHairColor() {
+        return hairColor;
+    }
+
+    public void setHairColor(String hairColor) {
+        this.hairColor = hairColor;
+    }
 
     public String getName() {
         return name;
@@ -46,6 +55,7 @@ public class Person extends Record {
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", hairColor='" + hairColor + '\'' +
                 '}';
     }
 
@@ -54,6 +64,22 @@ public class Person extends Record {
         return name.contains(str)
                 || surname.contains(str)
                 || phone.contains(str)
-                || email.contains(str);
+                || email.contains(str)
+                || hairColor.contains(str);
+    }
+
+    @Override
+    public void askQuestions() {
+        System.out.println("Enter name:");
+        name = Main.askString();
+
+        System.out.println("Enter surname:");
+        surname = Main.askString();
+
+        System.out.println("Enter phone:");
+        phone = Main.askString();
+
+        System.out.println("Enter email:");
+        email = Main.askString();
     }
 }

@@ -39,6 +39,10 @@ public class Main {
                 case "cr":
                     createReminder();
                     break;
+                case "createalarm":
+                case "ca":
+                    createAlarm();
+                    break;
                 case "list":
                     printList();
                     break;
@@ -58,6 +62,15 @@ public class Main {
             }
         }
     }
+
+    private static void createAlarm() {
+        System.out.println("Enter alarm time");
+        String text = askString();
+
+        var alarm = new Alarm();
+        addRecord(alarm);
+    }
+
 
     private static void createReminder() {
         System.out.println("Enter reminder text");

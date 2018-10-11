@@ -1,5 +1,7 @@
 package notepad;
 
+import java.time.LocalTime;
+
 public class Note extends Record {
     private String text;
 
@@ -24,6 +26,9 @@ public class Note extends Record {
     public boolean hasSubstring(String str) {
         return text.contains(str);
     }
+
+
+
 
     @Override
     public void askQuestions() {

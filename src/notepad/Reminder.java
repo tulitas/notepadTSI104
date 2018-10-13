@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 
 
-public class Reminder extends Note {
+public class Reminder extends Alarm {
     private LocalDate date;
 
 //dalee nasledovanie
@@ -16,7 +16,7 @@ public class Reminder extends Note {
         System.out.println("Enter reminder date");
          date = Main.askDate();
     }
-//16 - 20 nasledovanie
+// nasledovanie
     @Override
     public boolean hasSubstring(String str) {
         return super.hasSubstring(str)

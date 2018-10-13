@@ -64,8 +64,7 @@ public class Main {
     }
 
     private static void createAlarm() {
-        System.out.println("Enter alarm time");
-        String text = askString();
+
 
         var alarm = new Alarm();
         addRecord(alarm);
@@ -73,8 +72,7 @@ public class Main {
 
 
     private static void createReminder() {
-        System.out.println("Enter reminder text");
-        String text = askString();
+
 
         var reminder = new Reminder();
         addRecord(reminder);

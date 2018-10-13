@@ -81,5 +81,8 @@ public class Person extends Record {
 
         System.out.println("Enter email:");
         email = Main.askString();
+
+        System.out.println("Hair color:");
+        email = Main.askString();
     }
 }

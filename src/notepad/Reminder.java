@@ -8,6 +8,8 @@ import java.time.LocalTime;
 
 public class Reminder extends Alarm {
     private LocalDate date;
+    private String text;
+
 
 //dalee nasledovanie
     @Override
@@ -15,8 +17,20 @@ public class Reminder extends Alarm {
         super.askQuestions();
         System.out.println("Enter reminder date");
          date = Main.askDate();
+         System.out.println("enter text:");
+         text = Main.askString();
     }
-// nasledovanie
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+
+    // nasledovanie
     @Override
     public boolean hasSubstring(String str) {
         return super.hasSubstring(str)
@@ -32,6 +46,13 @@ public class Reminder extends Alarm {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+
+
+
+
+
+
 
 
 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 //hashmap, treemap, linkmap pozvoljaet sortirovat`
 public class Main {
     //12 konstanta dati, metod po date nize
@@ -11,7 +12,7 @@ public class Main {
     public final static DateTimeFormatter DATE_FORMATTER
             = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
-    public final static String TIME_FORMAT = "mm.HH";
+    public final static String TIME_FORMAT = "HH.mm";
     public final static DateTimeFormatter TIME_FORMATTER
             = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
@@ -40,6 +41,9 @@ public class Main {
                 case "ca":
                     createAlarm();
                     break;
+                case "expired":
+                    showExpired();
+                    break;
                 case "list":
                     printList();
                     break;
@@ -60,6 +64,19 @@ public class Main {
                     return;
                 default:
                     System.out.println("It isn't a command");
+            }
+        }
+    }
+
+    //metod dlja vivoda expirable
+    private static void showExpired() {
+        for (Record r : recordList.values()) {
+            if (r instanceof Expirable)  {
+                Expirable e = (Expirable) r;
+
+                if (e.isExpired()) {
+                    System.out.println(r);
+                }
             }
         }
     }
@@ -113,13 +130,15 @@ public class Main {
         int id = askInt();
         recordList.remove(id);
     }
-private static void showId(){
+
+    private static void showId() {
         System.out.println("Enter ID to show:");
         int id = askInt();
         Record record = recordList.get(id);
         System.out.println(record);
 
-}
+    }
+
     private static int askInt() {
         while (true) {
             try {
@@ -207,11 +226,13 @@ private static void showId(){
             return phone;
         }
     }
-    public static LocalDate askDate(){
+
+    public static LocalDate askDate() {
         String d = askString();
         LocalDate date = LocalDate.parse(d, DATE_FORMATTER);
         return date;
     }
+
     public static LocalTime askTime() {
         String t = askString();
         LocalTime time = LocalTime.parse(t, TIME_FORMATTER);

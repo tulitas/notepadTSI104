@@ -1,12 +1,12 @@
 package notepad;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
-public class Reminder extends Alarm {
+public class Reminder extends Alarm implements Expirable {
     private LocalDate date;
-    private String text;
 
 
     //dalee nasledovanie
@@ -15,17 +15,9 @@ public class Reminder extends Alarm {
         super.askQuestions();
         System.out.println("Enter reminder date");
         date = Main.askDate();
-        System.out.println("enter text:");
-        text = Main.askString();
+
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 
 
     // nasledovanie
@@ -45,6 +37,15 @@ public class Reminder extends Alarm {
         this.date = date;
     }
 
+    @Override
+    public boolean isExpired() {
+        LocalTime time = getTime();
+        LocalDateTime dt = LocalDateTime.of(date, time);
+        LocalDateTime now = LocalDateTime.now();
+        return now.isAfter(dt);
+
+
+    }
 
     @Override
     public String toString() {
@@ -52,7 +53,7 @@ public class Reminder extends Alarm {
                 "id=" + getId() + ", " +
                 "text='" + getText() + '\'' +
                 ", date='" + date.format(Main.DATE_FORMATTER) + '\'' +
-                ", time=`" + getTime().format(Main.TIME_FORMATTER) + ", " +
+
                 '}';
     }
 }

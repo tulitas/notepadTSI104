@@ -1,10 +1,9 @@
 package notepad;
 
 import java.time.LocalTime;
-
-public class Alarm extends Note{
+//implements poszvoljaet nasledovat` interface, neograni4ennoe koli4estvo, extends tolko odin
+public class Alarm extends Note implements Expirable{
     private LocalTime time;
-    private String alarmt;
     public boolean hasSubstring(String str) {
         return super.hasSubstring(str)
 
@@ -21,23 +20,25 @@ public class Alarm extends Note{
     public void askQuestions() {
 
         System.out.println("Enter alarm time:");
-        alarmt = Main.askString();
+        time = Main.askTime();
     }
 
-    public String getAlarmt() {
-        return alarmt;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
-
-    public void setAlarmt(String alarmt) {
-        this.alarmt = alarmt;
-    }
-
 
     @Override
     public String toString() {
-        return "Alarm{" +
-                "alarmt = " + alarmt +
+        return "Time{" +
+                "time = " + time +
                 '}';
+    }
+
+    @Override
+    public boolean isExpired() {
+        LocalTime now = LocalTime.now();
+        return time.isBefore(now);
+
     }
 }
 

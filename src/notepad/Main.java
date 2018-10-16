@@ -3,11 +3,8 @@ package notepad;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
+//hashmap, treemap, linkmap pozvoljaet sortirovat`
 public class Main {
     //12 konstanta dati, metod po date nize
     public final static String DATE_FORMAT = "dd.MM.yyyy";
@@ -20,7 +17,7 @@ public class Main {
 
 
     private static Scanner scanner = new Scanner(System.in);
-    private static List<Record> recordList = new ArrayList<>();
+    private static Map<Integer, Record> recordList = new LinkedHashMap<>();
 
     public static void main(String[] args) {
         while (true) {
@@ -55,6 +52,10 @@ public class Main {
                 case "help":
                     showHelp();
                     break;
+                case "showId":
+                case "id":
+                    showId();
+                    break;
                 case "exit":
                     return;
                 default:
@@ -81,7 +82,7 @@ public class Main {
     private static void find() {
         System.out.println("Find what?");
         String str = askString();
-        for (Record r : recordList) {
+        for (Record r : recordList.values()) {
             if (r.hasSubstring(str)) {
                 System.out.println(r);
             }
@@ -96,7 +97,7 @@ public class Main {
 
     private static void addRecord(Record r) {
         r.askQuestions();
-        recordList.add(r);
+        recordList.put(r.getId(), r);
         System.out.println(r);
     }
 
@@ -110,15 +111,15 @@ public class Main {
     private static void removeById() {
         System.out.println("Enter ID to remove:");
         int id = askInt();
-        for (int i = 0; i < recordList.size(); i++) {
-            Record p = recordList.get(i);
-            if (id == p.getId()) {
-                recordList.remove(i);
-                break;
-            }
-        }
+        recordList.remove(id);
     }
+private static void showId(){
+        System.out.println("Enter ID to show:");
+        int id = askInt();
+        Record record = recordList.get(id);
+        System.out.println(record);
 
+}
     private static int askInt() {
         while (true) {
             try {
@@ -142,7 +143,7 @@ public class Main {
 //        }
 //    }
     private static void printList() {
-        for (Record p : recordList) {
+        for (Record p : recordList.values()) {
             System.out.println(p);
         }
     }

@@ -3,22 +3,24 @@ package notepad;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
-//hashmap, treemap, linkmap pozvoljaet sortirovat`
 public class Main {
     //12 konstanta dati, metod po date nize
     public final static String DATE_FORMAT = "dd.MM.yyyy";
     public final static DateTimeFormatter DATE_FORMATTER
             = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
-    public final static String TIME_FORMAT = "HH.mm";
+    public final static String TIME_FORMAT = "mm.HH";
     public final static DateTimeFormatter TIME_FORMATTER
             = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
 
     private static Scanner scanner = new Scanner(System.in);
-    private static Map<Integer, Record> recordList = new LinkedHashMap<>();
+    private static List<Record> recordList = new ArrayList<>();
 
     public static void main(String[] args) {
         while (true) {
@@ -28,6 +30,10 @@ public class Main {
                 case "createperson":
                 case "cp":
                     createPerson();
+                    break;
+                case "create pet":
+                case "pc":
+                    createPet();
                     break;
                 case "createnote":
                 case "cn":
@@ -41,9 +47,6 @@ public class Main {
                 case "ca":
                     createAlarm();
                     break;
-                case "expired":
-                    showExpired();
-                    break;
                 case "list":
                     printList();
                     break;
@@ -56,10 +59,6 @@ public class Main {
                 case "help":
                     showHelp();
                     break;
-                case "showId":
-                case "id":
-                    showId();
-                    break;
                 case "exit":
                     return;
                 default:
@@ -68,17 +67,10 @@ public class Main {
         }
     }
 
-    //metod dlja vivoda expirable
-    private static void showExpired() {
-        for (Record r : recordList.values()) {
-            if (r instanceof Expirable)  {
-                Expirable e = (Expirable) r;
+    private static void createPet() {
 
-                if (e.isExpired()) {
-                    System.out.println(r);
-                }
-            }
-        }
+        Pet pet = new Pet();
+        addRecord(pet);
     }
 
     private static void createAlarm() {
@@ -99,7 +91,7 @@ public class Main {
     private static void find() {
         System.out.println("Find what?");
         String str = askString();
-        for (Record r : recordList.values()) {
+        for (Record r : recordList) {
             if (r.hasSubstring(str)) {
                 System.out.println(r);
             }
@@ -114,7 +106,7 @@ public class Main {
 
     private static void addRecord(Record r) {
         r.askQuestions();
-        recordList.put(r.getId(), r);
+        recordList.add(r);
         System.out.println(r);
     }
 
@@ -128,15 +120,13 @@ public class Main {
     private static void removeById() {
         System.out.println("Enter ID to remove:");
         int id = askInt();
-        recordList.remove(id);
-    }
-
-    private static void showId() {
-        System.out.println("Enter ID to show:");
-        int id = askInt();
-        Record record = recordList.get(id);
-        System.out.println(record);
-
+        for (int i = 0; i < recordList.size(); i++) {
+            Record p = recordList.get(i);
+            if (id == p.getId()) {
+                recordList.remove(i);
+                break;
+            }
+        }
     }
 
     private static int askInt() {
@@ -162,7 +152,7 @@ public class Main {
 //        }
 //    }
     private static void printList() {
-        for (Record p : recordList.values()) {
+        for (Record p : recordList) {
             System.out.println(p);
         }
     }
@@ -226,13 +216,11 @@ public class Main {
             return phone;
         }
     }
-
-    public static LocalDate askDate() {
+    public static LocalDate askDate(){
         String d = askString();
         LocalDate date = LocalDate.parse(d, DATE_FORMATTER);
         return date;
     }
-
     public static LocalTime askTime() {
         String t = askString();
         LocalTime time = LocalTime.parse(t, TIME_FORMATTER);

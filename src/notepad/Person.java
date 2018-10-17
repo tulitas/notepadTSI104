@@ -6,6 +6,7 @@ public class Person extends Record {
     private String phone;
     private String email;
     private String hairColor;
+    private String birthday;
 
     public String getHairColor() {
         return hairColor;
@@ -50,12 +51,13 @@ public class Person extends Record {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + getId() +
-                ", name='" + name + '\'' +
+                "id=" + getId() + ", " +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", hairColor='" + hairColor + '\'' +
+                ", birthday='" + birthday + '\'' +
                 '}';
     }
 
@@ -65,7 +67,9 @@ public class Person extends Record {
                 || surname.contains(str)
                 || phone.contains(str)
                 || email.contains(str)
-                || hairColor.contains(str);
+                || hairColor.contains(str)
+                || birthday.contains(str);
+
     }
 
     @Override
@@ -84,5 +88,13 @@ public class Person extends Record {
 
         System.out.println("Hair color:");
         email = Main.askString();
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }

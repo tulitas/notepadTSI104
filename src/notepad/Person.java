@@ -87,7 +87,10 @@ public class Person extends Record {
         email = Main.askString();
 
         System.out.println("Hair color:");
-        email = Main.askString();
+        hairColor = Main.askString();
+
+        System.out.println("Enter birthday:");
+        birthday = Main.askString();
     }
 
     public String getBirthday() {
